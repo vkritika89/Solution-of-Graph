@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+#define REP(i,n) for (int i = 1; i <= n; i++)
+#define mod 1000000007
+#define pb push_back
+#define ff first
+#define ss second
+#define ii pair<int,int>
+#define vii vector<ii>
+#define lli long long int
+#define INF 1000000000
+#define endl '\n'
+const double PI = 3.141592653589793238460;
+typedef std::complex<double> Complex;
+typedef std::valarray<Complex> CArray;
+using namespace std;
+
+vector<int> arr[1001];
+int visited[1001], Distance[1001];
+void dfs(int node,int d){
+	visited[node]=1;
+	Distance[node]=d;
+	for(int child:arr[node]){
+		if(!visited[child]){
+			dfs(child,Distance[node]+1);
+		}
+	}
+}
+int main(){
+	int n,t,a,b;
+	int c=0;
+	cin>>t;
+	for(int i=1;i<=t-1;i++){
+		cin>>a>>b;
+		arr[a].push_back(b);
+		arr[b].push_back(a);
+	}
+	dfs(1,0);
+	cin>>n;
+	int ans=-1;
+	int min_distance=INF;
+	while(n--){
+		int girl_city;
+		cin>>girl_city;
+		if(Distance[girl_city]<min_distance)
+		min_distance=Distance[girl_city],ans=girl_city;
+		else 
+		if(Distance[girl_city]==min_distance&&girl_city<ans)
+		ans=girl_city;
+	}
+	cout<<ans;
+	
+}
