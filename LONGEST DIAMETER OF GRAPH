@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+#define REP(i,n) for (int i = 1; i <= n; i++)
+#define mod 1000000007
+#define pb push_back
+#define ff first
+#define ss second
+#define ii pair<int,int>
+#define vii vector<ii>
+#define lli long long int
+#define INF 1000000000
+#define endl '\n'
+const double PI = 3.141592653589793238460;
+typedef std::complex<double> Complex;
+typedef std::valarray<Complex> CArray;
+using namespace std;
+vector<int> arr[100001];
+int visit[100001];
+int dis[100001];
+void dfs(int n,int d){
+	visit[n]=1;
+	dis[n]=d;
+	for(int child:arr[n]){
+		if(visit[child]==0)
+		dfs(child,d +1);
+	}
+}
+int main(){
+	int n,a,b;
+	cin>>n;
+	for(int i=1;i<=n-1;i++){
+		cin>>a>>b;
+		arr[a].push_back(b);
+		arr[b].push_back(a);
+	}
+	dfs(1,0);
+	int m=-1;int j=0;
+	for(int i=1;i<=n;i++){
+		if(dis[i]>m)m=dis[i],j=i;
+	}
+	for(int i=1;i<=n;i++){dis[i]=0;visit[i]=0;}
+
+	dfs(j,0);
+	m=-1;
+	for(int i=1;i<=n;i++){
+		if(dis[i]>m)m=dis[i],j=i;
+	}
+	cout<<m<<endl;
+	return 0;
+}
