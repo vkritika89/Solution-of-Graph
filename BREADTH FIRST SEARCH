@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+#define REP(i,n) for (int i = 1; i <= n; i++)
+#define mod 1000000007
+#define pb push_back
+#define ff first
+#define ss second
+#define ii pair<int,int>
+#define vii vector<ii>
+#define lli long long int
+#define INF 1000000000
+#define endl '\n'
+const double PI = 3.141592653589793238460;
+typedef std::complex<double> Complex;
+typedef std::valarray<Complex> CArray;
+using namespace std;
+vector<int> arr[10001];
+int visit[10001];
+               int dis[10001];
+void bfs(int src){
+	visit[src]=1;
+	queue<int> q;
+	q.push(src);
+	dis[src]=0;
+	while(!q.empty()){
+		int c=q.front();
+		q.pop();
+		for(int child:arr[c])
+		if(visit[child]==0){
+			q.push(child);
+			dis[child]=dis[c]+1;
+			visit[child]=1;
+		}
+	}
+}
+int main(){
+	int t,n,m,a,b;
+	cin>>t;
+	while(t--){
+		cin>>n>>m;
+		for(int i=1;i<=n;i++){
+		arr[i].clear();visit[i]=0;}
+		for(int i=1;i<=m;i++){
+			cin>>a>>b;
+			arr[a].push_back(b);
+			arr[b].push_back(a);
+		}
+		bfs(1);
+		cout<<dis[n]<<endl;
+	}
+}
