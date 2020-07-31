@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+#define REP(i,n) for (int i = 1; i <= n; i++)
+#define mod 1000000007
+#define pb push_back
+#define ff first
+#define ss second
+#define ii pair<int,int>
+#define vii vector<ii>
+#define lli long long int
+#define INF 1000000000
+#define endl '\n'
+const double PI = 3.141592653589793238460;
+typedef std::complex<double> Complex;
+typedef std::valarray<Complex> CArray;
+using namespace std;
+vector<int> arr[10001];
+int visit[10001],col[10001];
+bool dfs(int node,int c){
+	visit[node]=1;
+	col[node]=c;
+	for(int child:arr[node]){
+		if(visit[child]==0){
+		bool res=dfs(child,c^1);
+		if(res==false)
+		return false;}
+		else
+		if(col[child]==col[node])return false;
+	}
+	return true;
+}
+int main(){
+	int n,m,a,b,t;
+	cin>>t;
+	for(int k=1;k<=t;k++){
+	cin>>n>>m;
+	for(int i=1;i<=n;i++){
+		arr[i].clear();visit[i]=0;
+	}
+	for(int i=1;i<=m;i++){
+		cin>>a>>b;
+		arr[a].push_back(b);
+		arr[b].push_back(a);
+	}
+	bool flag=true;
+   	for(int i=1;i<=n;i++){
+   		if(visit[i]==0)
+   		{
+   			bool res=dfs(i,0);
+   			if(res==false)flag=false;
+		   }
+   		
+	   }
+	cout<<"Scenario #"<<k<<":"<<endl;
+	if(flag)cout<<"No suspicious bugs found!"<<endl;
+	else
+	cout<<"Suspicious bugs found!"<<endl;
+
+}
+	return 0;
+}
+
